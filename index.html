@@ -24,28 +24,24 @@ header {
 }
 
 .container {
-  max-width: 450px;
+  max-width: 400px;
   margin: auto;
   padding: 20px;
 }
 
-.card {
+.box {
   background: #111;
   padding: 20px;
   border-radius: 15px;
   margin-top: 20px;
 }
 
-h3 {
-  margin-bottom: 10px;
-}
-
 input {
   width: 100%;
   padding: 12px;
-  border-radius: 8px;
   border: none;
-  margin-bottom: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
 }
 
 button {
@@ -64,12 +60,6 @@ button {
   font-size: 22px;
   color: #00ffcc;
 }
-
-.info {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #ccc;
-}
 </style>
 
 </head>
@@ -82,22 +72,19 @@ button {
 
 <div class="container">
 
-  <div class="card">
+  <div class="box">
 
-    <h3>Comprar Perfumes</h3>
+    <h3>Quantidade (K)</h3>
 
-    <input type="number" id="qtd" placeholder="Digite a quantidade (ex: 100 = 100k)">
+    <input type="number" id="qtd" placeholder="Digite a quantidade">
 
     <button onclick="adicionar()">Adicionar</button>
 
-    <div class="total" id="total">Total: R$ 0,00</div>
-
-    <div class="info">
-      Valor: R$ 0,50 a cada 1k<br>
-      Ex: 10.000 = R$ 5,00
+    <div class="total" id="total">
+      Total: R$ 0,00
     </div>
 
-    <button onclick="enviar()">Enviar Pedido</button>
+    <button onclick="enviar()">Enviar pedido no WhatsApp</button>
 
   </div>
 
@@ -108,8 +95,8 @@ button {
 let total = 0;
 let quantidade = 0;
 
+// calcular valor
 function adicionar() {
-
   let q = document.getElementById("qtd").value;
 
   if (!q || q <= 0) {
@@ -128,15 +115,15 @@ function adicionar() {
   document.getElementById("qtd").value = "";
 }
 
+// enviar pedido
 function enviar() {
 
   if (total <= 0) {
-    alert("Adicione algo ao carrinho!");
+    alert("Adicione algo!");
     return;
   }
 
-  let mensagem = `🛒 Pedido:
-
+  let mensagem = `Pedido:
 Quantidade: ${quantidade}
 Valor: R$ ${total.toFixed(2)}
 Data: ${new Date().toLocaleString()}`;
@@ -155,4 +142,4 @@ Data: ${new Date().toLocaleString()}`;
 </script>
 
 </body>
-  </html>
+</html>
