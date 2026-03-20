@@ -10,51 +10,66 @@
 body {
   margin: 0;
   font-family: Arial;
-  background: #000;
+  background: linear-gradient(135deg, #000, #1a0000);
   color: #fff;
   text-align: center;
 }
 
+/* topo */
 header {
-  background: #111;
+  background: #0d0d0d;
   padding: 20px;
-  font-size: 24px;
-  color: #ff0000;
+  font-size: 26px;
   font-weight: bold;
+  color: #ff0000;
+  box-shadow: 0 2px 15px rgba(255,0,0,0.4);
 }
 
+/* container */
 .container {
-  max-width: 400px;
+  max-width: 420px;
   margin: auto;
   padding: 20px;
 }
 
+/* card */
 .box {
-  background: #111;
+  background: rgba(255,0,0,0.08);
+  backdrop-filter: blur(10px);
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,0,0,0.3);
 }
 
+/* inputs */
 input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 8px;
-}
-
-button {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
   border: none;
   border-radius: 10px;
-  background: #ff0000;
+  outline: none;
+}
+
+/* botões */
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ff0000, #8b0000);
   color: #fff;
   font-weight: bold;
   cursor: pointer;
+  transition: 0.2s;
 }
 
+button:hover {
+  transform: scale(1.05);
+}
+
+/* grid */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -62,12 +77,15 @@ button {
   margin-top: 15px;
 }
 
+/* total */
 .total {
   margin-top: 15px;
-  font-size: 20px;
+  font-size: 22px;
   color: #ff0000;
+  font-weight: bold;
 }
 
+/* aviso */
 .info {
   font-size: 13px;
   margin-top: 10px;
@@ -87,84 +105,4 @@ button {
 
   <div class="box">
 
-    <input type="text" id="server" placeholder="Servidor">
-    <input type="text" id="nick" placeholder="Nick do jogador">
-
-    <div class="grid">
-      <button onclick="add(1000)">1K</button>
-      <button onclick="add(200000)">200K</button>
-      <button onclick="add(500000)">500K</button>
-      <button onclick="add(1000000)">1KK</button>
-    </div>
-
-    <div class="total" id="total">Total: R$ 0,00</div>
-
-    <button onclick="enviar()">Enviar Pedido</button>
-    <button onclick="limpar()" style="background:#444;">Limpar Carrinho</button>
-
-    <div class="info">
-      ⚠️ Pagamento somente após confirmação do vendedor
-    </div>
-
-  </div>
-
-</div>
-
-<script>
-
-let total = 0;
-let quantidade = 0;
-
-function add(qtd) {
-  let valor = (qtd / 1000) * 0.5;
-
-  total += valor;
-  quantidade += qtd;
-
-  document.getElementById("total").innerText =
-    "Total: R$ " + total.toFixed(2);
-}
-
-function limpar() {
-  total = 0;
-  quantidade = 0;
-
-  document.getElementById("total").innerText =
-    "Total: R$ 0,00";
-}
-
-function enviar() {
-
-  let server = document.getElementById("server").value;
-  let nick = document.getElementById("nick").value;
-
-  if (!server || !nick) {
-    alert("Preencha servidor e nick!");
-    return;
-  }
-
-  if (total <= 0) {
-    alert("Adicione algum pacote!");
-    return;
-  }
-
-  let mensagem = `🛒 Pedido:
-
-Servidor: ${server}
-Nick: ${nick}
-Quantidade: ${quantidade}
-Valor: R$ ${total.toFixed(2)}
-
-⚠️ Pagamento somente após confirmação do vendedor`;
-
-  window.open(
-    "https://wa.me/558893568660?text=" + encodeURIComponent(mensagem),
-    "_blank"
-  );
-
-}
-
-</script>
-
-</body>
-</html>
+    <input type="text" id="server
