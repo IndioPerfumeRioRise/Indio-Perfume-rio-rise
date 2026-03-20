@@ -2,13 +2,222 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Teste</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Índio Perfume Rio Rise</title>
+
+<style>
+
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(135deg, #000, #1a0000);
+  color: #fff;
+  text-align: center;
+}
+
+header {
+  background: #0d0d0d;
+  padding: 20px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #ff0000;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 20px;
+}
+
+.box {
+  background: rgba(255,0,0,0.08);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,0,0,0.3);
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ff0000, #8b0000);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.total {
+  margin-top: 15px;
+  font-size: 22px;
+  color: #ff0000;
+  font-weight: bold;
+}
+
+.economia {
+  margin-top: 10px;
+  color: #00ff00;
+  font-weight: bold;
+}
+
+</style>
+
 </head>
-<body style="background:#000; color:#fff; text-align:center;">
 
-<h1>Site funcionando</h1>
+<body>
 
-<img src="logo.png" width="120">
+<header>
+Índio Perfume Rio Rise
+</header>
+
+<!-- LOGO -->
+<div>
+  <img src="logo.png" style="width:150px; margin-top:15px; border-radius:50%; box-shadow:0 0 20px red;">
+</div>
+
+<div class="container">
+
+  <div class="box">
+
+    <input type="text" id="server" placeholder="Servidor">
+    <input type="text" id="nick" placeholder="Nick do jogador">
+
+    <div class="grid">
+      <button onclick="add(1000)">1K</button>
+      <button onclick="add(200000)">200K</button>
+      <button onclick="add(500000)">500K</button>
+      <button onclick="add(1000000)">1KK</button>
+    </div>
+
+    <h4>Quantidade personalizada</h4>
+    <input type="number" id="custom" placeholder="Digite a quantidade">
+
+    <button onclick="addCustom()">Adicionar</button>
+
+    <div class="total" id="total">Total: R$ 0,00</div>
+    <div class="economia" id="economia"></div>
+
+    <button onclick="enviar()">Enviar Pedido</button>
+
+    <button onclick="limpar()" style="background:#333;">
+      Limpar Carrinho
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+
+let total = 0;
+let quantidade = 0;
+
+function calcular(qtd) {
+
+  let base = (qtd / 1000) * 0.60;
+  let final = base;
+  let economia = 0;
+
+  if (qtd >= 500000) {
+    final = (qtd / 1000) * 0.50;
+    economia = base - final;
+  }
+
+  return { final, economia };
+}
+
+function atualizar(qtd) {
+
+  let res = calcular(qtd);
+
+  total += res.final;
+  quantidade += qtd;
+
+  document.getElementById("total").innerText =
+    "Total: R$ " + total.toFixed(2);
+
+  if (res.economia > 0) {
+    document.getElementById("economia").innerText =
+      "💰 Você economizou: R$ " + res.economia.toFixed(2);
+  }
+}
+
+function add(qtd) {
+  atualizar(qtd);
+}
+
+function addCustom() {
+  let qtd = parseInt(document.getElementById("custom").value);
+
+  if (!qtd || qtd <= 0) {
+    alert("Digite uma quantidade válida!");
+    return;
+  }
+
+  atualizar(qtd);
+  document.getElementById("custom").value = "";
+}
+
+function limpar() {
+  total = 0;
+  quantidade = 0;
+
+  document.getElementById("total").innerText = "Total: R$ 0,00";
+  document.getElementById("economia").innerText = "";
+}
+
+function enviar() {
+
+  let server = document.getElementById("server").value;
+  let nick = document.getElementById("nick").value;
+
+  if (!server || !nick) {
+    alert("Preencha servidor e nick!");
+    return;
+  }
+
+  if (total <= 0) {
+    alert("Adicione algo!");
+    return;
+  }
+
+  let msg = `🛒 Pedido:
+
+Servidor: ${server}
+Nick: ${nick}
+Quantidade: ${quantidade}
+Valor: R$ ${total.toFixed(2)}
+
+⚠️ Pagamento após confirmação`;
+
+  window.open(
+    "https://wa.me/558893568660?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
+}
+
+</script>
 
 </body>
 </html>
