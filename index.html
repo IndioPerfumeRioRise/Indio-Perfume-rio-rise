@@ -75,6 +75,12 @@ button:hover {
   font-weight: bold;
 }
 
+.economia {
+  margin-top: 10px;
+  color: #00ff00;
+  font-weight: bold;
+}
+
 .info {
   font-size: 13px;
   margin-top: 10px;
@@ -111,6 +117,8 @@ button:hover {
 
     <div class="total" id="total">Total: R$ 0,00</div>
 
+    <div class="economia" id="economia"></div>
+
     <button onclick="enviar()">Enviar Pedido</button>
 
     <button onclick="limpar()" style="background:#333;">
@@ -130,86 +138,32 @@ button:hover {
 let total = 0;
 let quantidade = 0;
 
-// cálculo com desconto
 function calcularValor(qtd) {
-  let valor = (qtd / 1000) * 0.60;
 
+  let preco = 0.60;
+
+  // desconto automático
   if (qtd >= 500000) {
-    valor = valor * 0.90; // 10% desconto
+    preco = 0.50;
   }
 
-  return valor;
+  return (qtd / 1000) * preco;
 }
 
-function add(qtd) {
-  let valor = calcularValor(qtd);
+function atualizar(qtd) {
 
-  total += valor;
-  quantidade += qtd;
+  let valorSemDesconto = (qtd / 1000) * 0.60;
+  let valorFinal = calcularValor(qtd);
 
-  document.getElementById("total").innerText =
-    "Total: R$ " + total.toFixed(2);
-}
+  let economia = valorSemDesconto - valorFinal;
 
-function addCustom() {
-  let qtd = parseInt(document.getElementById("custom").value);
-
-  if (!qtd || qtd <= 0) {
-    alert("Digite uma quantidade válida!");
-    return;
-  }
-
-  let valor = calcularValor(qtd);
-
-  total += valor;
+  total += valorFinal;
   quantidade += qtd;
 
   document.getElementById("total").innerText =
     "Total: R$ " + total.toFixed(2);
 
-  document.getElementById("custom").value = "";
-}
-
-function limpar() {
-  total = 0;
-  quantidade = 0;
-
-  document.getElementById("total").innerText =
-    "Total: R$ 0,00";
-}
-
-function enviar() {
-
-  let server = document.getElementById("server").value;
-  let nick = document.getElementById("nick").value;
-
-  if (!server || !nick) {
-    alert("Preencha servidor e nick!");
-    return;
-  }
-
-  if (total <= 0) {
-    alert("Adicione um pacote!");
-    return;
-  }
-
-  let mensagem = `🛒 Pedido:
-
-Servidor: ${server}
-Nick: ${nick}
-Quantidade: ${quantidade}
-Valor: R$ ${total.toFixed(2)}
-
-⚠️ Pagamento somente após confirmação do vendedor`;
-
-  window.open(
-    "https://wa.me/558893568660?text=" + encodeURIComponent(mensagem),
-    "_blank"
-  );
-
-}
-
-</script>
-
-</body>
-</html>
+  if (economia > 0) {
+    document.getElementById("economia").innerText =
+      "💰 Você economizou: R$ " + economia.toFixed(2);
+  } else {
