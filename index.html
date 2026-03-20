@@ -18,9 +18,9 @@ body {
 header {
   background: #111;
   padding: 20px;
-  font-size: 26px;
+  font-size: 24px;
+  color: #ff0000;
   font-weight: bold;
-  color: #00ffcc;
 }
 
 .container {
@@ -33,32 +33,45 @@ header {
   background: #111;
   padding: 20px;
   border-radius: 15px;
-  margin-top: 20px;
 }
 
 input {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
+  margin-top: 10px;
   border: none;
   border-radius: 8px;
-  margin-top: 10px;
 }
 
 button {
   width: 100%;
-  padding: 15px;
+  padding: 12px;
   margin-top: 10px;
   border: none;
   border-radius: 10px;
-  background: #00ffcc;
+  background: #ff0000;
+  color: #fff;
   font-weight: bold;
   cursor: pointer;
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 15px;
+}
+
 .total {
   margin-top: 15px;
-  font-size: 22px;
-  color: #00ffcc;
+  font-size: 20px;
+  color: #ff0000;
+}
+
+.info {
+  font-size: 13px;
+  margin-top: 10px;
+  color: #ccc;
 }
 </style>
 
@@ -74,72 +87,11 @@ button {
 
   <div class="box">
 
-    <h3>Quantidade (K)</h3>
+    <input type="text" id="server" placeholder="Servidor">
+    <input type="text" id="nick" placeholder="Nick do jogador">
 
-    <input type="number" id="qtd" placeholder="Digite a quantidade">
-
-    <button onclick="adicionar()">Adicionar</button>
-
-    <div class="total" id="total">
-      Total: R$ 0,00
-    </div>
-
-    <button onclick="enviar()">Enviar pedido no WhatsApp</button>
-
-  </div>
-
-</div>
-
-<script>
-
-let total = 0;
-let quantidade = 0;
-
-// calcular valor
-function adicionar() {
-  let q = document.getElementById("qtd").value;
-
-  if (!q || q <= 0) {
-    alert("Digite uma quantidade válida!");
-    return;
-  }
-
-  let valor = (q / 1000) * 0.5;
-
-  total += valor;
-  quantidade += parseInt(q);
-
-  document.getElementById("total").innerText =
-    "Total: R$ " + total.toFixed(2);
-
-  document.getElementById("qtd").value = "";
-}
-
-// enviar pedido
-function enviar() {
-
-  if (total <= 0) {
-    alert("Adicione algo!");
-    return;
-  }
-
-  let mensagem = `Pedido:
-Quantidade: ${quantidade}
-Valor: R$ ${total.toFixed(2)}
-Data: ${new Date().toLocaleString()}`;
-
-  window.open(
-    "https://wa.me/558893568660?text=" + encodeURIComponent(mensagem),
-    "_blank"
-  );
-
-  total = 0;
-  quantidade = 0;
-
-  document.getElementById("total").innerText = "Total: R$ 0,00";
-}
-
-</script>
-
-</body>
-</html>
+    <div class="grid">
+      <button onclick="add(1000)">1K</button>
+      <button onclick="add(5000)">5K</button>
+      <button onclick="add(10000)">10K</button>
+      <button onclick="add(25000)">25
