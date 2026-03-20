@@ -92,6 +92,79 @@ button {
 
     <div class="grid">
       <button onclick="add(1000)">1K</button>
-      <button onclick="add(5000)">5K</button>
-      <button onclick="add(10000)">10K</button>
-      <button onclick="add(25000)">25
+      <button onclick="add(200000)">200K</button>
+      <button onclick="add(500000)">500K</button>
+      <button onclick="add(1000000)">1KK</button>
+    </div>
+
+    <div class="total" id="total">Total: R$ 0,00</div>
+
+    <button onclick="enviar()">Enviar Pedido</button>
+    <button onclick="limpar()" style="background:#444;">Limpar Carrinho</button>
+
+    <div class="info">
+      ⚠️ Pagamento somente após confirmação do vendedor
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+let total = 0;
+let quantidade = 0;
+
+function add(qtd) {
+  let valor = (qtd / 1000) * 0.5;
+
+  total += valor;
+  quantidade += qtd;
+
+  document.getElementById("total").innerText =
+    "Total: R$ " + total.toFixed(2);
+}
+
+function limpar() {
+  total = 0;
+  quantidade = 0;
+
+  document.getElementById("total").innerText =
+    "Total: R$ 0,00";
+}
+
+function enviar() {
+
+  let server = document.getElementById("server").value;
+  let nick = document.getElementById("nick").value;
+
+  if (!server || !nick) {
+    alert("Preencha servidor e nick!");
+    return;
+  }
+
+  if (total <= 0) {
+    alert("Adicione algum pacote!");
+    return;
+  }
+
+  let mensagem = `🛒 Pedido:
+
+Servidor: ${server}
+Nick: ${nick}
+Quantidade: ${quantidade}
+Valor: R$ ${total.toFixed(2)}
+
+⚠️ Pagamento somente após confirmação do vendedor`;
+
+  window.open(
+    "https://wa.me/558893568660?text=" + encodeURIComponent(mensagem),
+    "_blank"
+  );
+
+}
+
+</script>
+
+</body>
+</html>
