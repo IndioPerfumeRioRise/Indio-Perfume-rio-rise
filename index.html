@@ -54,6 +54,11 @@ button {
   color: #fff;
   font-weight: bold;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
 }
 
 .grid {
@@ -100,7 +105,7 @@ button {
     </div>
 
     <h4>Quantidade personalizada (K)</h4>
-    <input type="number" id="custom" placeholder="Ex: 1500 (1.5K)">
+    <input type="number" id="custom" placeholder="Digite a quantidade">
 
     <button onclick="addCustom()">Adicionar quantidade</button>
 
@@ -125,8 +130,19 @@ button {
 let total = 0;
 let quantidade = 0;
 
+// cálculo com desconto
+function calcularValor(qtd) {
+  let valor = (qtd / 1000) * 0.60;
+
+  if (qtd >= 500000) {
+    valor = valor * 0.90; // 10% desconto
+  }
+
+  return valor;
+}
+
 function add(qtd) {
-  let valor = (qtd / 1000) * 0.5;
+  let valor = calcularValor(qtd);
 
   total += valor;
   quantidade += qtd;
@@ -143,7 +159,7 @@ function addCustom() {
     return;
   }
 
-  let valor = (qtd / 1000) * 0.5;
+  let valor = calcularValor(qtd);
 
   total += valor;
   quantidade += qtd;
